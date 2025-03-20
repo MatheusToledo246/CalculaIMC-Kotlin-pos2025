@@ -88,10 +88,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Limpar"
-        android:padding="16dp"
-        app:layout_constraintStart_toEndOf="@id/btCalcular"
         app:layout_constraintBottom_toBottomOf="@id/btCalcular"
-        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
