@@ -5,6 +5,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.util.Locale
 import kotlin.math.pow
 
 private lateinit var etPeso : EditText
@@ -38,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     private fun btLimparOnClick() {
         etPeso.setText("")
         etAltura.setText("")
-        tvResultado.text = "0,0"
+        tvResultado.text = getString( R.string.zeros )
         etPeso.requestFocus()
 
     }
@@ -46,21 +49,30 @@ class MainActivity : AppCompatActivity() {
     private fun btCalcularOnClick() {
 
         if (etPeso.text.toString().isEmpty()) {
-            etPeso.error = "Campo peso não informado"
+            etPeso.error = getString(R.string.error_peso)
             return
         }
 
         if (etAltura.text.toString().isEmpty()){
-            etAltura.error = "Campo Altura não informado"
+            etAltura.error = getString(R.string.error_altura)
             return
         }
 
         val peso = etPeso.text.toString().toDouble()
         val altura = etAltura.text.toString().toDouble()
 
-        val imc = peso / altura.pow( 2)
+        var imc: Double
 
-        tvResultado.text = "%.2f".format( imc )
+        if ( Locale.getDefault().language.equals("en") ){
+            imc = 703 * (peso / altura.pow(2))
+            val nf = NumberFormat.getNumberInstance( Locale.US)
+            val df = nf as DecimalFormat
+            tvResultado.text= df.format(imc)
+        } else {
+            imc = peso / altura.pow( 2)
+            val df = DecimalFormat("0.0")
+            tvResultado.text= df.format(imc)
+        }
     }
 
 }
